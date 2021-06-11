@@ -123,10 +123,6 @@ void *send_msg(void *arg)
             flag=0;
             continue;
         }
-        else if(flag==4)
-        {
-            memset(name_msg,0,sizeof(na))
-        }
 
 
         sprintf(name_msg,"%s %s",name,msg);
