@@ -29,12 +29,12 @@ pthread_mutex_t mutx;
 int main(int argc, char *argv[])
 {
     int s_sock, c_sock;
-    struc sockaddr_in s_adr, c_adr;
+    struct sockaddr_in s_adr, c_adr;
     int c_adr_size;
     pthread_t t_id;
 
     //set time log
-    sturct tm *t;
+    struct tm *t;
     time_t timer = time(NULL);
     t=localtime(&timer);
 
@@ -99,7 +99,7 @@ void* client_handler(void *arg)
 
     char name_cnt[2];
 
-    siae_t bufsize =0;
+    size_t bufsize =0;
     int nbyte;
     memset(filebuf,0x00,30);
     char filesize[5];
@@ -158,14 +158,14 @@ void* client_handler(void *arg)
             while(!strncmp(flag,"miniGame",strlen("miniGame")))
             {
                 read(c_sock,gamec,4);
-                win = atioi(gamc);
+                win = atoi(gamec);
                 if(won==win)
                 {
                     write(c_sock,"miniGame",BUF_SIZE);
                     break;
                 }
                 else if(win>won)    write(c_sock,under,2);
-                else if(win<won) wite(c_sock,up,2);
+                else if(win<won) write(c_sock,up,2);
                 else write(c_sock,please,2);
             }
             memset(msg,0,sizeof(msg));
@@ -191,7 +191,7 @@ void* client_handler(void *arg)
             str_len=strlen(msg);
             fclose(fp);
         }
-        else if(!strncmp(flag,"download",strlne("download")))
+        else if(!strncmp(flag,"download",strlen("download")))
         {
             int ifsize =0;
             char fsize[5];
@@ -252,7 +252,7 @@ char* serverState(int count)
     char* stateMsg = malloc(sizeof(char)*NAME_SIZE);
     strcpy(stateMsg,"NONE");
     if(count<5) strcpy(stateMsg,"GOOD");
-    else    strspy(stateMsg,"BAD");
+    else    strcpy(stateMsg,"BAD");
     return stateMsg;
 }
 void menu(char port[])
