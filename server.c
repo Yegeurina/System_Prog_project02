@@ -114,20 +114,6 @@ void* client_handler(void *arg)
     int result = 0;
     char result_c[BUF_SIZE];
 
-    int gamenum;
-    char gamec[BUF_SIZE];
-    char temp[BUF_SIZE];
-
-    char flag[BUF_SIZE];
-    char gamemsg[BUF_SIZE];
-
-    int win, won;
-
-    char under[BUF_SIZE];
-    char up[BUF_SIZE];
-    char please[BUF_SIZE];
-
-    won = (rand()%1000)+1;
     while(1)
     {
         read(c_sock,flag,BUF_SIZE);
@@ -153,26 +139,6 @@ void* client_handler(void *arg)
             strcat(msg,result_c);   //msg add result
             strcat(msg," WON\n");
             str_len = strlen(msg);
-        }
-        else if(!strncmp(flag,"miniGame",strlen("miniGame")))
-        {
-            sprintf(under,"%d",1);
-            sprintf(up,"%d",2);
-            sprintf(please,"%d",3);
-            while(!strncmp(flag,"miniGame",strlen("miniGame")))
-            {
-                read(c_sock,gamec,4);
-                win = atoi(gamec);
-                if(won==win)
-                {
-                    write(c_sock,"miniGame",BUF_SIZE);
-                    break;
-                }
-                else if(win>won)    write(c_sock,under,2);
-                else if(win<won) write(c_sock,up,2);
-                else write(c_sock,please,2);
-            }
-            memset(msg,0,sizeof(msg));
         }
         else if(!strncmp(flag,"transfer",strlen("transfer")))
         {

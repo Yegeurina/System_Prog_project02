@@ -18,7 +18,6 @@ void menu();
 void changeName();
 void menuOptions(int sock);
 void dutchPay(int sock);
-void miniGame(int sock);
 void fileTrasfer(int sock);
 void fileDownload(int sock);
 
@@ -32,7 +31,6 @@ char c_ip[NORMAL_SIZE];
 
 volatile int flag=0;
 volatile int flagDetail=0;
-volatile int gameflag=0;
 
 pthread_mutex_t mutx;
 
@@ -212,9 +210,8 @@ void menuOptions(int sock)
     printf("\t1. change name\n");
     printf("\t2. clear / update\n");
     printf("\t3. dutchpay\n");
-    printf("\t4. minigame\n");
-    printf("\t5. file transfer\n");
-    printf("\t6. file download\n");
+    printf("\t4. file transfer\n");
+    printf("\t5. file download\n");
     printf("\tthe other key is cancel\n");
     printf("\n\t********************\n");
     printf("\n\t>> ");
@@ -233,27 +230,16 @@ void menuOptions(int sock)
             flag=0;
             break;
         case 3 :
-            printf("dutchpay function start\n");
+            printf("\n\tdutchpay function start\n");
             flag=1;
-            //dutchPay(sock);
             break;
-        case 4:
-            printf("minigame function start\n");
-            flag=2;
-            miniGame(sock);
-            break;
-        case 5 :
-            printf("filetransfer function start\n");
+        case 4 :
+            printf("\n\tfiletransfer function start\n");
             flag=3;
-            fileTrasfer(sock);
             break;
-        case 6 : 
-            printf("filedownload function start\n");
+        case 5 : 
+            printf("\n\tfiledownload function start\n");
             flag=4;
-            fileDownload(sock);
-            flagDetail=9;
-            flag=0;
-            usleep(1000000);
             break;
         default :
             printf("\tcancel.\n");
@@ -281,28 +267,7 @@ void dutchPay(int sock)
     sprintf(totalPrice,"%d",price);
     write(sock,totalPrice,10); //Total Price
 }
-void miniGame(int sock)
-{
-    int gameNum;
-    int gamec[100];
-    char under[]="Under\n";
-    char up[]="Up\n";
-    char plz[]="Please Input Number\n";
 
-    while(1)
-    {
-        strcpy(msg,"miniGame");
-        write(sock,msg,strlen(msg));
-        memset(msg,0,sizeof(msg));
-
-        printf("Guess Number!! Choose between 1~999(second line is fake) : \n");
-        scanf("%d",&gameNum);
-
-        sprintf(gamec,"%d",gameNum);
-        write(sock,gamec,4);
-    }
-    memset(msg,0,sizeof(msg));
-}
 void fileTrasfer(int sock)
 {
     int i=0;
