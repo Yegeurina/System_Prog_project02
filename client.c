@@ -105,20 +105,29 @@ void *send_msg(void *arg)
             close(sock);
             exit(0);
         }
-        if(flag==1)//dutchpay
+        else if(flag==1)//dutchpay
         {
             dutchPay(sock);
             flag=0;
             memset(msg,0,sizeof(msg));
             continue;
         }
-        if(flag==2)
+        else if(flag==2) //fileTransfer
         {
             memset(name_msg,0,sizeof(name_msg));
             fileTrasfer(sock);
             flag=0;
             continue;
         }
+        else if(flag == 3) //fileDownload
+        {
+            memset(name_msg,0,sizeof(name_msg));
+            fileDownload(sock);
+            flagDetail=9;
+            flag=0;
+            continue;
+        }
+
 
         sprintf(name_msg,"%s %s",name,msg);
         write(sock,name_msg,strlen(name_msg));
@@ -331,9 +340,7 @@ void fileTrasfer(int sock)
 }
 void fileDownload(int sock)
 {
-    char name_msg[NORMAL_SIZE+BUF_SIZE];
-    memset(name_msg,0,sizeof(name_msg));
-    
+    int i;
     FILE *fp;
     char filebuf[BUF_SIZE];
     int read_cnt;
@@ -343,10 +350,19 @@ void fileDownload(int sock)
     char fSize[5];
 
     strcpy(msg,"download");
-    write(sock,msg,strlen(msg));
+    write(sock,msg,strlen("download"));
 
     printf("Input Filename : ");
     fgets(filename,NORMAL_SIZE,stdin);
+
+     for(i=0;filename[i]!=0;i++)
+    {
+        if(filename[i]=='\n')
+        {
+            filename[i]=0;
+            break;
+        }
+    }
     
     sprintf(name_cnt,"%d",strlen(filename));
     write(sock,name_cnt,2);
