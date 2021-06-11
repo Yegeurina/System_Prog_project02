@@ -90,8 +90,8 @@ void *send_msg(void *arg)
 
     while(1)
     {
+        printf(">>");
         fgets(msg,BUF_SIZE,stdin);
-        getchar();
         if(!strcmp(msg,"!menu\n"))
         {
             menuOptions(sock);
