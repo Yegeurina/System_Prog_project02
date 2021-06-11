@@ -26,6 +26,10 @@ int client_cnt;
 int client_socket[MAX_CLIENT];
 pthread_mutex_t mutx;
 
+//set time log
+struct tm *t;
+time_t timer = time(NULL);
+
 int main(int argc, char *argv[])
 {
     int s_sock, c_sock;
@@ -33,9 +37,7 @@ int main(int argc, char *argv[])
     int c_adr_size;
     pthread_t t_id;
 
-    //set time log
-    struct tm *t;
-    time_t timer = time(NULL);
+    
     t=localtime(&timer);
 
     if(argc!=2) //port input error
@@ -119,6 +121,7 @@ void* client_handler(void *arg)
         read(c_sock,flag,BUF_SIZE);
         if(!strncmp(flag,"dutch",strlen("dutch")))
         {
+            printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
             printf("\n!---DutchPay---\n");
 
             read(c_sock,howm,2); //People
@@ -142,6 +145,7 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"transfer",strlen("transfer")))
         {
+            printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
             printf("\n!---File Transfer---\n");
 
             memset(msg,0,sizeof(msg));
@@ -165,6 +169,7 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"download",strlen("download")))
         {
+            printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
             printf("\n!---File Download---\n");
 
             int ifsize =0;
@@ -194,6 +199,9 @@ void* client_handler(void *arg)
             if(str_len==0) break;
         }
         
+        printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
+        printf("%s",msg);
+        
         send_msg(msg,str_len);
     }
 
@@ -209,8 +217,11 @@ void* client_handler(void *arg)
         }
     }
     client_cnt--;
+
+    t=localtime(&timer);
     printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
     printf("User(%d/%d)\n",client_cnt,MAX_CLIENT);
+
     pthread_mutex_unlock(&mutx);
     close(c_sock);
     return NULL;
