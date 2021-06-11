@@ -63,7 +63,7 @@ int main(int argc,char *argv[])
     memset(&s_adr,0,sizeof(s_adr));
     s_adr.sin_family = AF_INET;
     s_adr.sin_addr.s_addr=inet_addr(argv[1]);
-    s_addr.sin_port = htons(atoi(argv[2]));
+    s_adr.sin_port = htons(atoi(argv[2]));
 
     if(connect(sock,(struct sockaddr_in*)&s_adr,sizeof(s_adr))==-1) error_handler("Connect Error");
 
