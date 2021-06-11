@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     memset(&s_adr,0,sizeof(s_adr));
     s_adr.sin_family=AF_INET;
     s_adr.sin_addr.s_addr=htonl(INADDR_ANY);
-    s_adr.sin_port = hotns(atoi(argv[1]));
+    s_adr.sin_port = htons(atoi(argv[1]));
     
     if(bind(s_sock, (struct sockaddr*)&s_adr,sizeof(s_adr)==-1))    error_handler("Bind Error");
     if(listen(s_sock,5)==-1)    error_handler("Listen Error");
@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
             pthread_create(&t_id,NULL,client_handler,(void*)&c_sock); //thread start
             pthread_detach(t_id);
 
-            printf("Connected Client IP : %s",inet_ntoa(c_adr.sin_adddr));
-            printf("(%4d-%02d-%02d %02d:%02d)\n",t.tm_year+1900,t.tm_mon+1,t.tm_mday,t.tm_hour,t.tm_min);
+            printf("Connected Client IP : %s",inet_ntoa(c_adr.sin_addr));
+            printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
             printf("User(%d/%d)\n",client_cnt,MAX_CLIENT);
         }
         else
@@ -197,7 +197,7 @@ void* client_handler(void *arg)
             char fsize[5];
             memset(msg,0,sizeof(msg));
             read(c_sock,name_cnt,2);
-            read_cnt(c_sock,filename,atoi(name_cnt));
+            read(c_sock,filename,atoi(name_cnt));
             
             fp = fopen(filename,"rb");
             
@@ -244,7 +244,7 @@ void send_msg(char *msg,int len)
 {
     int i;
     pthread_mutex_lock(&mutx);
-    for(i=0;i<client_cnt;i++)   write(client_socket[i],msg,lent);
+    for(i=0;i<client_cnt;i++)   write(client_socket[i],msg,len);
     pthread_mutex_unlock(&mutx);
 }
 char* serverState(int count)
