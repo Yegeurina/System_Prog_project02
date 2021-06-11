@@ -92,6 +92,8 @@ void *send_msg(void *arg)
     {
         printf(">>");
         fgets(msg,BUF_SIZE,stdin);
+        sprintf(name_msg,"%s %s",name,msg);
+        write(sock,name_msg,strlen(name_msg));
         if(!strcmp(msg,"!menu\n"))
         {
             menuOptions(sock);
@@ -125,8 +127,7 @@ void *send_msg(void *arg)
         }
 
 
-        sprintf(name_msg,"%s %s",name,msg);
-        write(sock,name_msg,strlen(name_msg));
+        
     }
 
     return NULL;
