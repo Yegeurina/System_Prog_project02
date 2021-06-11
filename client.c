@@ -102,10 +102,16 @@ void *send_msg(void *arg)
         {
             menuOptions(sock);
         }
-        else if(!strcmp(msg,"q\n") || !strcmp(msg,"Q\n"))
+        if(!strcmp(msg,"q\n") || !strcmp(msg,"Q\n"))
         {
             close(sock);
             exit(0);
+        }
+        if(flag==1)//dutchpay
+        {
+            dutchPay(sock);
+            flag=0;
+            continue;
         }
 
         sprintf(name_msg,"%s %s",name,msg);
@@ -228,7 +234,7 @@ void menuOptions(int sock)
         case 3 :
             printf("dutchpay function start\n");
             flag=1;
-            dutchPay(sock);
+            //dutchPay(sock);
             break;
         case 4:
             printf("minigame function start\n");
@@ -262,7 +268,7 @@ void dutchPay(int sock)
     char howm[100];
 
     strcpy(msg,"dutch"); // function flag
-    write(sock,msg,BUF_SIZE);
+    write(sock,msg,strlen(dutch));
     
     printf("Input How many? ");
     scanf("%d",&howMany);
