@@ -111,6 +111,7 @@ void *send_msg(void *arg)
         {
             dutchPay(sock);
             flag=0;
+            memset(msg,0,sizeof(msg));
             continue;
         }
 
@@ -279,8 +280,6 @@ void dutchPay(int sock)
     scanf("%d",&price);
     sprintf(totalPrice,"%d",price);
     write(sock,totalPrice,10); //Total Price
-
-    memset(msg,0,sizeof(msg));
 }
 void miniGame(int sock)
 {

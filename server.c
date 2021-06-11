@@ -133,20 +133,24 @@ void* client_handler(void *arg)
         read(c_sock,flag,BUF_SIZE);
         if(!strncmp(flag,"dutch",strlen("dutch")))
         {
-            read(c_sock,howm,2);
+            printf("!--DutchPay\n\n");
+
+            read(c_sock,howm,2); //People
             howMany = atoi(howm);
 
-            read(c_sock,totalprice,10);
+            read(c_sock,totalprice,10); //Total Price
             price = atoi(totalprice);
 
             strcpy(msg,"people : ");
             strcat(msg,howm);
+
             strcat(msg,", totalprice : ");
             strcat(msg,totalprice);
+
             strcat(msg," WON, per person : ");
-            result = price / howMany;
+            result = price / howMany;   //calculate
             sprintf(result_c,"%d",result);
-            strcat(msg,result_c);
+            strcat(msg,result_c);   //msg add result
             strcat(msg," WON\n");
             str_len = strlen(msg);
         }
