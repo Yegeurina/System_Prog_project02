@@ -115,6 +115,9 @@ void* client_handler(void *arg)
     int result = 0;
     char result_c[BUF_SIZE];
 
+    char flag[BUF_SIZE];
+    
+
     while(1)
     {
         read(c_sock,flag,BUF_SIZE);

@@ -96,6 +96,7 @@ void *send_msg(void *arg)
     while(1)
     {
         fgets(msg,BUF_SIZE,stdin);
+        
         if(!strcmp(msg,"!menu\n"))
         {
             menuOptions(sock);
