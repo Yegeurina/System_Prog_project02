@@ -53,7 +53,7 @@ int main(int argc,char *argv[])
     struct tm *t;
     time_t timer = time(NULL);
     t=localtime(&timer);
-    sprintf(serv_time, "%d-%d-%d %d:%d", t->tm_year+1900, t->tm_mon+1, t->tm_mday, t->tm_hour,t->tm_min);
+    sprintf(s_time, "%d-%d-%d %d:%d", t->tm_year+1900, t->tm_mon+1, t->tm_mday, t->tm_hour,t->tm_min);
 
     sprintf(name, "  [%s] -", argv[3]);
     sprintf(c_ip, "%s", argv[1]);
@@ -120,21 +120,21 @@ void *recv_msg(void *arg)
     int sock = *((int *)arg);
     char name_msg[NORMAL_SIZE+BUF_SIZE];
     int str_len;
-    char flag[NORMAL_SIZE];
+    char recvFlag[NORMAL_SIZE];
     char temp[NORMAL_SIZE];
 
-    int recvFlag =0;
+    int Flag =0;
 
     while(1)
     {
         if(flag==2)
         {
-            read(sock,flg,1);
-            recvFlag=atoi(flg);
-            if(recvFlag==1) printf("DOWN\n");
-            else if(recvFlag==2)    printf("UP\n");
-            else if(recvFlag==3)    printf("Error,Retry\n");
-            else if(!stnrcmp(flg,"miniGame",strlen("miniGame")))
+            read(sock,recvFlag,1);
+            Flag=atoi(recvFlag);
+            if(Flag==1) printf("DOWN\n");
+            else if(Flag==2)    printf("UP\n");
+            else if(Flag==3)    printf("Error,Retry\n");
+            else if(!strncmp(recvFlag,"miniGame",strlen("miniGame")))
             {
                 printf("Congratulations! You are WINNER!\n");
                 memset(name_msg,0,sizeof(name_msg));
@@ -150,7 +150,7 @@ void *recv_msg(void *arg)
             char fileSize[BUF_SIZE];
             int ifSize=0;
             strcpy(fileSize,name_msg);
-            fp=filename(filename,"wb");
+            fp=filopen(filename,"wb");
             ifSize = atoi(fileSize);
             memset(name_msg,0,sizeof(name_msg));
             usleep(4000000);
@@ -232,7 +232,7 @@ void menuOptions(int sock)
             dutchPay(sock);
             break;
         case 4:
-            printf(/"minigame function start\n");
+            printf("minigame function start\n");
             flag=2;
             miniGame(sock);
             break;
@@ -250,7 +250,7 @@ void menuOptions(int sock)
             usleep(1000000);
             break;
         default :
-            printf("cancel.\n")
+            printf("cancel.\n");
             flag=0;
             break;
     }
@@ -320,14 +320,14 @@ void fileTrasfer(int sock)
     sprintf(name_cnt,"%d",strlen(filename));
     write(sock,name_cnt,2);
 
-    wirte(sock,filename,strlen(filename));
+    write(sock,filename,strlen(filename));
 
     fp=fopen(filename,"rb");
     fseek(fp,0,SEEK_END);
     ifSize = ftell(fp);
     fseek(fp,0,SEEK_SET);
     
-    sprint(fSize,"%d",ifSize);
+    sprintf(fSize,"%d",ifSize);
     write(sock,fSize,5);
     
     if(fp!=NULL)
