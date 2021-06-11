@@ -43,7 +43,7 @@ int main(int argc,char *argv[])
     pthread_t send_thread,recv_thread;
     void* thread_return;
 
-    if(argv!=4)
+    if(argc!=4)
     {
         printf(" Usage : %s <ip> <port> <name>\n", argv[0]);
         exit(1);
