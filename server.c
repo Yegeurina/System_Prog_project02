@@ -26,9 +26,6 @@ int client_cnt;
 int client_socket[MAX_CLIENT];
 pthread_mutex_t mutx;
 
-//set time log
-struct tm *t;
-time_t timer;
 
 int main(int argc, char *argv[])
 {
@@ -37,7 +34,9 @@ int main(int argc, char *argv[])
     int c_adr_size;
     pthread_t t_id;
 
-    timer=time(NULL);
+    //set time log
+    struct tm *t;
+    time_t timer;=time(NULL);
     t=localtime(&timer);
 
     if(argc!=2) //port input error
