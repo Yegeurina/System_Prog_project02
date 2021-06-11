@@ -123,6 +123,10 @@ void *send_msg(void *arg)
             flag=0;
             continue;
         }
+        else if(flag==4)
+        {
+            memset(name_msg,0,sizeof(na))
+        }
 
 
         sprintf(name_msg,"%s %s",name,msg);
@@ -208,8 +212,8 @@ void menuOptions(int sock)
     printf("\t1. change name\n");
     printf("\t2. clear / update\n");
     printf("\t3. dutchpay\n");
-    printf("\t4. file transfer\n");
-    printf("\t5. file download\n");
+    printf("\t4. file transfer(Only Text file)\n");
+    printf("\t5. file download(Only Text file)\n");
     printf("\tthe other key is cancel\n");
     printf("\n\t********************\n");
     printf("\n\t>> ");
