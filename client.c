@@ -150,7 +150,7 @@ void *recv_msg(void *arg)
             char fileSize[BUF_SIZE];
             int ifSize=0;
             strcpy(fileSize,name_msg);
-            fp=fileopen(filename,"wb");
+            fp=fopen(filename,"wb");
             ifSize = atoi(fileSize);
             memset(name_msg,0,sizeof(name_msg));
             usleep(4000000);
