@@ -48,14 +48,15 @@ int main(int argc, char *argv[])
     menu(argv[1]);
 
     pthread_mutex_init(&mutx,NULL);
-    s_sock = socket(PF_INET,SOCK_STREAM,0);
+    s_sock=socket(PF_INET, SOCK_STREAM, 0);
+
     //server socket set : TCP, IPv4
-    memset(&s_adr,0,sizeof(s_adr));
+    memset(&s_adr, 0, sizeof(s_adr));
     s_adr.sin_family=AF_INET;
     s_adr.sin_addr.s_addr=htonl(INADDR_ANY);
-    s_adr.sin_port = htons(atoi(argv[1]));
+    s_adr.sin_port=htons(atoi(argv[1]));
     
-    if(bind(s_sock, (struct sockaddr*)&s_adr,sizeof(s_adr)==-1))    error_handler("Bind Error");
+    if (bind(s_sock, (struct sockaddr*)&s_adr, sizeof(s_adr))==-1)    error_handler("Bind Error");
     if(listen(s_sock,5)==-1)    error_handler("Listen Error");
 
     while(1)
