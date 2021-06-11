@@ -112,6 +112,13 @@ void *send_msg(void *arg)
             memset(msg,0,sizeof(msg));
             continue;
         }
+        if(flag==2)
+        {
+            memset(name_msg,0,sizeof(name_msg));
+            fileTrasfer(sock);
+            flag=0;
+            continue;
+        }
 
         sprintf(name_msg,"%s %s",name,msg);
         write(sock,name_msg,strlen(name_msg));
@@ -235,11 +242,11 @@ void menuOptions(int sock)
             break;
         case 4 :
             printf("\n\tfiletransfer function start\n");
-            flag=3;
+            flag=2;
             break;
         case 5 : 
             printf("\n\tfiledownload function start\n");
-            flag=4;
+            flag=3;
             break;
         default :
             printf("\tcancel.\n");
@@ -278,22 +285,29 @@ void fileTrasfer(int sock)
     int ifSize=0;
     char fSize[5];
 
-    char name_msg[NORMAL_SIZE+BUF_SIZE];
-    memset(name_msg,0,sizeof(name_msg));
     strcpy(msg,"transfer");
     write(sock,msg,strlen("transfer"));
     
     printf("Input filename : ");
     fgets(filename,NORMAL_SIZE,stdin);
 
-    sprintf(name_cnt,"%d",strlen(filename));
-    write(sock,name_cnt,2);
+    for(i=0;filename[i]!=0;i++)
+    {
+        if(filename[i]=='\n')
+        {
+            filename[i]=0;
+            break;
+        }
+    }
 
-    write(sock,filename,strlen(filename));
+    sprintf(name_cnt,"%d",strlen(filename));
+    write(sock,name_cnt,2); //filename length
+
+    write(sock,filename,strlen(filename)); //filename notice
 
     fp=fopen(filename,"rb");
     fseek(fp,0,SEEK_END);
-    ifSize = ftell(fp);
+    ifSize = ftell(fp); //fsize=filesize
     fseek(fp,0,SEEK_SET);
     
     sprintf(fSize,"%d",ifSize);
@@ -311,8 +325,9 @@ void fileTrasfer(int sock)
             }
             write(sock,fileBuf,read_cnt);
         }
-        fclose(fp);
     }
+    
+    fclose(fp);
 }
 void fileDownload(int sock)
 {
