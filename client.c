@@ -228,19 +228,19 @@ void menuOptions(int sock)
             flag=0;
             break;
         case 3 :
-            printf("\n\tdutchpay function start\n");
+            printf("\tdutchpay function start\n");
             flag=1;
             break;
         case 4 :
-            printf("\n\tfiletransfer function start\n");
+            printf("\tfiletransfer function start\n");
             flag=2;
             break;
         case 5 : 
-            printf("\n\tfiledownload function start\n");
+            printf("\tfiledownload function start\n");
             flag=3;
             break;
         default :
-            printf("\tcancel.\n");
+            printf("\tcancel.");
             flag=0;
             break;
     }
