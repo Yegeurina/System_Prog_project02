@@ -185,8 +185,6 @@ void menu()
     printf(" server time : %s \n", s_time);
     printf(" ************* menu ***************\n");
     printf(" if you want to select menu -> !menu\n");
-    printf(" 1. change name\n");
-    printf(" 2. clear/update\n");
     printf(" **********************************\n");
     printf(" Exit -> q & Q\n\n");
 }
@@ -216,6 +214,7 @@ void menuOptions(int sock)
 
     scanf("%d",&select);
     getchar();
+
     switch(select)
     {
         case 1 :
