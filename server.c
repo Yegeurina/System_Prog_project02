@@ -147,8 +147,7 @@ void* client_handler(void *arg)
             result = price / howMany;
             sprintf(result_c,"%d",result);
             strcat(msg,result_c);
-            strcat(msg,result_c);
-            strcat(msg," WON");
+            strcat(msg," WON\n");
             str_len = strlen(msg);
         }
         else if(!strncmp(flag,"miniGame",strlen("miniGame")))

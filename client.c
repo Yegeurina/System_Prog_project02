@@ -268,7 +268,7 @@ void dutchPay(int sock)
     char howm[100];
 
     strcpy(msg,"dutch"); // function flag
-    write(sock,msg,strlen(dutch));
+    write(sock,msg,strlen("dutch"));
     
     printf("Input How many? ");
     scanf("%d",&howMany);
