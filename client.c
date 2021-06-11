@@ -83,11 +83,6 @@ void *send_msg(void *arg)
     int sock = *((int *)arg);
     char name_msg[NORMAL_SIZE+BUF_SIZE];
     char myInfo[BUF_SIZE];
-    char* who;
-    char temp[BUF_SIZE];
-
-
-    int k=0;
 
     printf(">> Join the Chat\n");
     sprintf(myInfo,"%s's join. IP : %s",name,c_ip);
@@ -96,7 +91,7 @@ void *send_msg(void *arg)
     while(1)
     {
         fgets(msg,BUF_SIZE,stdin);
-        
+
         if(!strcmp(msg,"!menu\n"))
         {
             menuOptions(sock);
@@ -149,21 +144,7 @@ void *recv_msg(void *arg)
 
     while(1)
     {
-        if(flag==2)
-        {
-            read(sock,recvFlag,1);
-            Flag=atoi(recvFlag);
-            if(Flag==1) printf("DOWN\n");
-            else if(Flag==2)    printf("UP\n");
-            else if(Flag==3)    printf("Error,Retry\n");
-            else if(!strncmp(recvFlag,"miniGame",strlen("miniGame")))
-            {
-                printf("Congratulations! You are WINNER!\n");
-                memset(name_msg,0,sizeof(name_msg));
-                flag=0;
-            }
-        }
-        else if(flag==4 || flagDetail==9)
+         if(flag==3 || flagDetail==9)
         {
             FILE *fp;
             char filebuf[100];

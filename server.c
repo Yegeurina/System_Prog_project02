@@ -125,8 +125,9 @@ void* client_handler(void *arg)
         read(c_sock,flag,BUF_SIZE);
         if(!strncmp(flag,"dutch",strlen("dutch")))
         {
+            
+            printf("\n!---DutchPay---");
             printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
-            printf("\n!---DutchPay---\n");
 
             read(c_sock,howm,2); //People
             howMany = atoi(howm);
@@ -149,8 +150,9 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"transfer",strlen("transfer")))
         {
+           
+            printf("\n!---File Transfer---");
             printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
-            printf("\n!---File Transfer---\n");
 
             memset(msg,0,sizeof(msg));
             read(c_sock,name_cnt,2);
@@ -173,8 +175,9 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"download",strlen("download")))
         {
+            
+            printf("\n!---File Download---");
             printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
-            printf("\n!---File Download---\n");
 
             int ifsize =0;
             char fsize[5];
@@ -202,9 +205,10 @@ void* client_handler(void *arg)
             str_len = read(c_sock,msg,sizeof(msg));
             if(str_len==0) break;
         }
-        
-        printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
+
         printf("%s",msg);
+        printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
+        
 
         send_msg(msg,str_len);
     }
@@ -223,8 +227,9 @@ void* client_handler(void *arg)
     client_cnt--;
 
    
+   
+    printf("User(%d/%d)",client_cnt,MAX_CLIENT);
     printf("(%4d-%02d-%02d %02d:%02d)\n",t->tm_year+1900,t->tm_mon+1,t->tm_mday,t->tm_hour,t->tm_min);
-    printf("User(%d/%d)\n",client_cnt,MAX_CLIENT);
 
     pthread_mutex_unlock(&mutx);
     close(c_sock);
