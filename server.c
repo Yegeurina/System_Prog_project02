@@ -119,7 +119,7 @@ void* client_handler(void *arg)
         read(c_sock,flag,BUF_SIZE);
         if(!strncmp(flag,"dutch",strlen("dutch")))
         {
-            printf("!--DutchPay\n\n");
+            printf("\n!---DutchPay---\n");
 
             read(c_sock,howm,2); //People
             howMany = atoi(howm);
@@ -142,6 +142,8 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"transfer",strlen("transfer")))
         {
+            printf("\n!---File Transfer---\n");
+
             memset(msg,0,sizeof(msg));
             read(c_sock,name_cnt,2);
             read(c_sock,filename,atoi(name_cnt));
@@ -163,6 +165,8 @@ void* client_handler(void *arg)
         }
         else if(!strncmp(flag,"download",strlen("download")))
         {
+            printf("\n!---File Download---\n");
+
             int ifsize =0;
             char fsize[5];
             memset(msg,0,sizeof(msg));
