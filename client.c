@@ -85,7 +85,7 @@ void *send_msg(void *arg)
     char myInfo[BUF_SIZE];
 
     printf(">> Join the Chat\n");
-    sprintf(myInfo,"%s's join. IP : %s",name,c_ip);
+    sprintf(myInfo,"%s's join. IP : %s\n",name,c_ip);
     write(sock,myInfo,strlen(myInfo));
 
     while(1)
