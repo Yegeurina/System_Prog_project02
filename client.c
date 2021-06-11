@@ -198,26 +198,26 @@ void menu()
 void changeName()
 {
     char nameTemp[100];
-    printf("Input new name : ");
+    printf("\tInput new name : ");
     scanf("%s",nameTemp);
     strcpy(msg,name);
     strcat(msg,"--> Change Name -->");
     sprintf(name,"[%s]",nameTemp);
-    printf("\nComplete\n");
+    printf("\n\tComplete\n");
 }
 void menuOptions(int sock)
 {
     int select;
-    printf("\n***** menu mode *****\n");
-    printf("1. change name\n");
-    printf("2. clear / update\n");
-    printf("3. dutchpay\n");
-    printf("4. minigame\n");
-    printf("5. file transfer\n");
-    printf("6. file download\n");
-    printf("the other key is cancel\n");
-    printf("********************\n");
-    printf(">> ");
+    printf("\n\t***** menu mode *****\n");
+    printf("\t1. change name\n");
+    printf("\t2. clear / update\n");
+    printf("\t3. dutchpay\n");
+    printf("\t4. minigame\n");
+    printf("\t5. file transfer\n");
+    printf("\t6. file download\n");
+    printf("\tthe other key is cancel\n");
+    printf("\n\t********************\n");
+    printf("\n\t>> ");
 
     scanf("%d",&select);
     getchar();
@@ -256,7 +256,7 @@ void menuOptions(int sock)
             usleep(1000000);
             break;
         default :
-            printf("cancel.\n");
+            printf("\tcancel.\n");
             flag=0;
             break;
     }
